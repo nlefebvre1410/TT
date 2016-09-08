@@ -1,0 +1,100 @@
+{% extends '@CzAdmin/Layout/layout.html.twig' %}
+
+{% block title %}CzAdminBundle:Carrousel:carrousel{% endblock %}
+
+{% block content %}
+    {{ form_start(form, {'action': path('CzAdminBundle_carrouseltest'), 'attr': {'class': 'form-horizontal'}}) }}
+    {% include '@CzAdmin/Layout/_header.global.html.twig' %}
+    <div class="row">
+        <div class="col-md-12">
+
+            {{ form_errors(form) }}
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">Basic layout</h5>
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li><a data-action="collapse"></a></li>
+                                <li><a data-action="reload"></a></li>
+                                <li><a data-action="close"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <a href="#" class="add_tag_link">Add a Slide</a>
+                        <h6>Format</h6>
+
+                        <div class="form-group">
+                            <div class="col-lg-7">
+                                {% form_theme form.slides 'CzAdminBundle:Form:fields.html.twig' %}
+                                <ul class="tags" data-prototype="{{ form_widget(form.slides.vars.prototype)|e('html_attr') }}">
+                                    {# iterate over each existing tag and render its only field: name #}
+                                    {% for slide in form.slides %}
+                                        <li>{{ form_row(slide.image) }}</li>
+                                        <li>{{ form_row(slide.format, {'class': 'form-control'}) }}</li>
+                                        <li>{{ form_row(slide.fleches, {'class': 'form-control'}) }}</li>
+                                        <li>{{ form_row(slide.translations) }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                </div>
+
+
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+        <script>
+            var $collectionHolder;
+
+            // setup an "add a tag" link
+            var $addTagLink = $('<a href="#" class="add_tag_link">Add a Slide</a>');
+            var $newLinkLi = $('<li></li>').append($addTagLink);
+
+            jQuery(document).ready(function() {
+                $('div').removeClass('form-group')
+                // Get the ul that holds the collection of tags
+                $collectionHolder = $('ul.tags');
+
+                // add the "add a tag" anchor and li to the tags ul
+                $collectionHolder.append($newLinkLi);
+
+                // count the current form inputs we have (e.g. 2), use that as the new
+                // index when inserting a new item (e.g. 2)
+                $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+                $addTagLink.on('click', function(e) {
+                    // prevent the link from creating a "#" on the URL
+                    e.preventDefault();
+
+                    // add a new tag form (see next code block)
+                    addTagForm($collectionHolder, $newLinkLi);
+                });
+            });
+
+
+            function addTagForm($collectionHolder, $newLinkLi) {
+                $(this).addClass('form-group')
+                // Get the data-prototype explained earlier
+                var prototype = $collectionHolder.data('prototype');
+
+                // get the new index
+                var index = $collectionHolder.data('index');
+
+                // Replace '__name__' in the prototype's HTML to
+                // instead be a number based on how many items we have
+                var newForm = prototype.replace(/__name__/g, index);
+
+                // increase the index with one for the next item
+                $collectionHolder.data('index', index + 1);
+
+                // Display the form in the page in an li, before the "Add a tag" link li
+                var $newFormLi = $('<li></li>').append(newForm);
+                $newLinkLi.before($newFormLi);
+            }
+        </script>
+
+{% endblock %}
+

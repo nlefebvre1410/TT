@@ -1,0 +1,89 @@
+{% extends '@CzAdmin/Layout/layout.html.twig' %}
+
+{% block title %}CzAdminBundle:AcceuilSuite:index{% endblock %}
+
+{% block content %}
+    {% form_theme form 'CzAdminBundle:Form:fields.html.twig' %}
+    {% include '@CzAdmin/Layout/_header.global.html.twig' %}
+    {#{{ form_start(form, {'action': path('CzAdminBundle_accueil_services'), 'attr': {'class': 'form-horizontal'}}) }}#}
+<h1>Welcome to the AcceuilSuite:index page</h1>
+
+    <div class="panel panel-flat">
+        <div class="panel-heading">
+            <h6 class="panel-title text-semibold">Fill space</h6>
+            <div class="heading-elements">
+                <ul class="icons-list">
+                    <li><a data-action="collapse"></a></li>
+                    <li><a data-action="reload"></a></li>
+                    <li><a data-action="close"></a></li>
+                </ul>
+            </div>
+        </div>
+
+
+
+        <div class="panel-body">
+            {{ form(form, {'action': path('CzAdminBundle_accueil_services'), 'attr': {'class': 'form-horizontal'}}) }}
+            <button type="submit">t</button>
+            {#<p class="content-group">To fill the vertical space allocated by its container, set the <code>heightStyle</code> option to <code>"fill"</code>, and the script will automatically set the dimensions of the accordion to the height of its parent container.</p>#}
+
+            {#<div id="jui-accordion-fill">#}
+                {#<span class="text-semibold">Section 1</span>#}
+                {#<div>#}
+                    {#Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch.#}
+                {#</div>#}
+
+                {#<span class="text-semibold">Section 2</span>#}
+                {#<div>#}
+                    {#Тon cupidatat skateboard dolor brunch. Тesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda.#}
+                {#</div>#}
+
+                {#<span class="text-semibold">Section 3</span>#}
+                {#<div>#}
+                    {#3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it.#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+    </div>
+    <script>
+        ajaxForm(".form-horizontal")
+        function ajaxForm(selector) {
+
+            $(selector).submit( function(event) {
+
+                event.preventDefault();
+                var $this = $(this);
+                //Ici on peut ajouter un loader...
+                $.ajax({
+                    url: $this.attr('action'),
+                    type: $this.attr('method'),
+                    data: new FormData( $this[0] ),
+                    processData: false,
+                    contentType: false,
+                    statusCode: {
+                        //traitement en cas de succès
+                        200: function(response) {
+                            var successMessage = response.successMessage ;
+                            //on vide les champs formulaires ou on le supprime ou ...
+//                            $(selector).trigger("reset");
+                            //on retire le loader...
+                            //on prévient l'utilistateur du bonne envoi...
+
+                        },
+                        //traitement en cas d'erreur (on peut aussi traiter le cas erreur 500...)
+                        412: function(response) {
+                            var errorsForm = response.responseJSON.formErrors ;
+                            //on affiche les erreurs...
+                        }
+                    }
+                })
+
+
+            });
+        };
+        $("#jui-accordion-fill").accordion({
+            heightStyle: "fill"
+        });
+
+    </script>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% spaceless %}<!DOCTYPE html>
+{% set htmlLocale = app.request.locale|default(defaultlocale)|slice(0,2) %}
+<!--[if lte IE 9]> <html class="no-js lt-ie9" lang="{{ htmlLocale }}"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="{{ htmlLocale }}"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+    </title>
+
+    {% if page is defined %}
+        {{ render_seo_metadata_for(page) }}
+    {% endif %}
+
+    {# Favicons #}
+    {% include '@CzAdmin/Layout/_favicons.html.twig' %}
+
+    {# Webfonts #}
+    {% include 'CzAdminBundle:Layout:_webfonts.html.twig' %}
+
+    {# CSS #}
+    {% include '@CzAdmin/Layout/_css.html.twig' %}
+</head>
+{% endspaceless %}
+
+{#<body class="navbar-top">#}
+<body {% block extraparamsinbody %}{% endblock %}
+        class="login-container" {% block extrabodyclasses %}{% endblock %}"
+        data-file-browse-url="{% if nodebundleisactive is defined and nodebundleisactive %}{{ path('CzAdminBundle_ckselecturl') }}{% endif %}" data-image-browse-url="{% if mediabundleisactive is defined %}{{ path('KunstmaanMediaBundle_chooser', {'type': 'image'}) }}{% endif %}">
+<!-- Body block -->
+{% block body %}
+    {# Google Tagmanager #}
+    {% include '@CzAdmin/Layout/_googletagmanager.html.twig' %}
+
+    {# Outdated browser message #}
+    {% include '@CzAdmin/Layout/_outdatedbrowser.html.twig' %}
+
+
+    {# nav #}
+    {% block nav %}
+        {% include '@CzAdmin/Layout/_nav.html.twig' %}
+    {% endblock %}
+	<!-- Page container -->
+<div class="page-container">
+
+    <!-- Page content -->
+    <div class="page-content">
+
+                {# Breadcrumbs #}
+                {% block sidebar %}
+                    {% include '@CzAdmin/Layout/_sidebar.html.twig' %}
+                {% endblock %}
+                {# Breadcrumbs #}
+                {% block breadcrumbs %}
+                    {% include '@CzAdmin/Layout/_breadcrumbs.html.twig' %}
+                {% endblock %}
+
+          <!-- main content -->
+          <div class="content-wrapper">
+                {# Header #}
+                {% block header %}
+                    {% include '@CzAdmin/Layout/_header.html.twig' %}
+                {% endblock %}
+
+                {% block content %}{% endblock %}
+
+
+                {# Footer #}
+                {% block footer %}
+                    {% include '@CzAdmin/Layout/_footer.html.twig' %}
+                {% endblock %}
+
+
+                {# Cookieconsent #}
+                {% block cookieconsent %}
+                    {% include '@CzAdmin/Layout/_cookieconsent.html.twig' %}
+                {% endblock %}
+
+          </div><!-- /content area -->
+
+    </div><!-- /main content -->
+
+</div>
+<!-- /page content -->
+
+</div>
+<!-- /page container -->
+{% endblock %}
+    {# JS Footer #}
+    {% include '@CzAdmin/Layout/_js_footer.html.twig' %}
+</body>
+</html>

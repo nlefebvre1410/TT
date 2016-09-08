@@ -1,0 +1,12 @@
+{% block header %}
+    {% include '@CzAdmin/Layout/_header.html.twig' %}
+{% endblock %}
+                  {% block admin_page_title %}
+                      <div class="content">
+                      {% if adminmenu.current %}
+                          <h6 class="content-group text-semibold">
+                              {{ adminmenu.current.label | trans }} {% block page_header_addition %}{% endblock %}
+                          </h6>
+                      {% endif %}
+                      {% block messages %}{% endblock %}
+{% endblock %}

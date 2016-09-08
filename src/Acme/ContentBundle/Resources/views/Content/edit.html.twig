@@ -1,0 +1,38 @@
+{% extends '@CzAdmin/Layout/layout.html.twig' %}
+{% block content%}
+  {{ form_start(edit_form, {'action': path('content_edit',{'id': content.id}), 'attr': {'class': 'form-horizontal'}}) }}
+        {% include '@CzAdmin/Layout/_header.global.html.twig' %}
+<div class="row">
+    <div class="col-md-12">
+
+            {{ form_errors(edit_form) }}
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h5 class="panel-title">Basic layout</h5>
+                    {#<div class="heading-elements">#}
+                        {#<ul class="icons-list">#}
+                            {#<li><a data-action="collapse"></a></li>#}
+                            {#<li><a data-action="reload"></a></li>#}
+                            {#<li><a data-action="close"></a></li>#}
+                        {#</ul>#}
+                    {#</div>#}
+
+
+                {#<div class="col-lg-7">#}
+
+            {% form_theme edit_form 'AcmeContentBundle:Form:form.html.twig' %}
+
+            {{ form_widget(edit_form) }}
+
+                    {{ tabs_widget(tabPane) }}
+{#</div>#}   </div>
+            </div>
+
+    </div>
+
+
+</div>
+
+    {{ form_end(edit_form) }}
+
+{% endblock %}

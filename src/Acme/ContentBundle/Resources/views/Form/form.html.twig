@@ -1,0 +1,76 @@
+{% extends 'bootstrap_3_layout.html.twig' %}
+{%- block collection_widget -%}
+    {% if form.vars.attr.class is defined and form.vars.attr.class == 'datatable' %}
+        // La variable prototype regroupe tous les champs du formulaire imbriqué
+        // Elle permet de construire son «squelette» dans l'attribut data-prototype
+        // Ce dernier est utilisé en javascript à l'ajout d'un onglet ou d'une ligne du tableau :
+        {%- set data_prototype = '<tr>' -%}
+        {%- for child in prototype -%}
+            {%- set data_prototype = data_prototype ~ '<td>' ~ form_widget(child) ~ '</td>' -%}
+        {%- endfor -%}
+        {%- set data_prototype = data_prototype ~ '</tr>' -%}
+        {%- set attr = attr|merge({ 'data-prototype': data_prototype}) -%}
+
+        {%- set attr = attr|merge({ 'data-length': form|length, 'class': attr.class|default('') ~ ' table dataTable' }) -%}
+
+        <table {{ block('widget_container_attributes') }}>
+            <thead>
+            <tr>
+                {%- for child in prototype -%}
+                    <th {% if child.vars.attr['data-width'] is defined %}width="{{- child.vars.attr['data-width'] -}}"{% endif %}>
+                        {{- form_label(child) -}}
+                    </th>
+                {%- endfor -%}
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            // On parcourt l'objet form pour initialiser chaque ligne :
+            {%- for formChild in form -%}
+                <tr>
+                    {%- for child in formChild -%}
+                        <td>
+                            {{- form_widget(child) -}}
+                            {{- form_errors(child) -}}
+                        </td>
+                    {%- endfor -%}
+                </tr>
+            {%- endfor -%}
+            </tbody>
+        </table>
+
+    {% else %}
+
+        {%- set attr = attr|merge({ 'data-prototype': form_widget(prototype), 'data-length': form|length, 'class': attr.class|default('') ~ ' tabbable' }) -%}
+
+        <div {{ block('widget_container_attributes') }}>
+            <ul class="nav nav-tabs tab-color-blue">
+
+                // On parcourt l'objet form pour initialiser chaque onglet :
+                {%- for key, child in form -%}
+                    <li{% if loop.first %} class="active"{% endif %}>
+                           {#{{ dump( child.vars.value.lang) }}#}
+                        {% if child.vars.value.__toString is defined %}
+                            {% set title = child.vars.value %}
+                        {% else %}
+                            {% set title =  child.vars.value.lang %}
+                        {% endif %}
+
+                        <a href="#{{ form.vars.name ~ key }}" data-toggle="tab" aria-expanded="false">{{ title }}</a>
+                    </li>
+                {%- endfor -%}
+
+            </ul>
+            <div class="tab-content">
+
+                {%- for key, child in form -%}
+                    <div id="{{ form.vars.name ~ key }}" class="tab-pane{% if loop.first %} active{% endif %}">
+                        {{ form_widget(child) }}
+                    </div>
+                {%- endfor -%}
+
+            </div>
+        </div>
+    {% endif %}
+{%- endblock collection_widget -%}

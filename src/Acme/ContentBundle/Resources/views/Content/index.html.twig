@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Content list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Lang</th>
+                <th>Online</th>
+                <th>Title</th>
+                <th>Slug</th>
+                <th>Url</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for content in contents %}
+            <tr>
+                <td><a href="{{ path('content_show', { 'id': content.id }) }}">{{ content.id }}</a></td>
+                <td>{{ content.lang }}</td>
+                <td>{% if content.online %}Yes{% else %}No{% endif %}</td>
+                <td>{{ content.title }}</td>
+                <td>{{ content.slug }}</td>
+                <td>{{ content.url }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('content_show', { 'id': content.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('content_edit', { 'id': content.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('content_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

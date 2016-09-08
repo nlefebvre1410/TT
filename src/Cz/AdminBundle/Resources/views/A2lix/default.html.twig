@@ -1,0 +1,101 @@
+{% block a2lix_translations_widget %}
+
+    {{ form_errors(form) }}
+    {#<div class="a2lix_translations tabbable">#}
+        <ul class="nav nav-pills">
+
+            {% for translationsFields in form %}
+                {% set locale = translationsFields.vars.name %}
+
+
+                <li {% if app.request.locale == locale %}class="active"{% endif %}>
+
+                    <a href="#" data-toggle="tab" data-target=".{{ translationsFields.vars.id }}_a2lix_translationsFields-{{ locale }}" id="{{ locale }}">
+                        {{ locale|capitalize }}
+                        {#{% if form.vars.default_locale == locale %}[Default]{% endif %}#}
+                        {% if translationsFields.vars.required %}*{% endif %}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <div class="tab-content">
+
+            {% for translationsFields in form %}
+
+                {% set locale = translationsFields.vars.name %}
+
+                <div class="{{ translationsFields.vars.id }}_a2lix_translationsFields-{{ locale }} tab-pane {% if app.request.locale == locale %}active{% endif %} {% if not form.vars.valid %}sonata-ba-field-error{% endif %}">
+
+                    {{ form_errors(translationsFields) }}
+                    {{ form_widget(translationsFields)}}
+
+                </div>
+            {% endfor %}
+        </div>
+    {#</div>#}
+
+{% endblock %}
+
+{% block a2lix_translationsForms_widget %}
+
+    {{ block('a2lix_translations_widget') }}
+
+{% endblock %}
+
+
+
+{#{% block form_row %}#}
+    {#{% spaceless %}#}
+
+        {#<div class="form-group {% if errors|length > 0 %}form-group--has-error{% endif %}">#}
+            {#{{ form_label(form) }}#}
+            {#{{ form_widget(form) }}#}
+            {#{{ form_errors(form) }}#}
+        {#</div>#}
+    {#{% endspaceless %}#}
+{#{% endblock form_row %}#}
+
+
+{#{% block form_widget_simple %}#}
+    {#{% spaceless %}#}
+
+        {#<div class="col-lg-9">#}
+            {#{% set type = type|default('text') %}#}
+            {#<input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="form-control ">#}
+        {#</div>#}
+
+    {#{% endspaceless %}#}
+{#{% endblock form_widget_simple %}#}
+
+
+ {#Form widget: Textarea#}
+{#{% block textarea_widget %}#}
+    {#{% spaceless %}#}
+
+        {#<div class="col-lg-9">#}
+            {#<textarea {{ block('widget_attributes') }} rows="5" cols="5" class="form-control" placeholder="Enter your message here"></textarea>#}
+        {#</div>#}
+
+    {#{% endspaceless %}#}
+{#{% endblock textarea_widget %}#}
+ {#Form label#}
+{#{% block form_label %}#}
+    {#{% spaceless %}#}
+        {#{% if label is not same as(false) %}#}
+            {#{% if not compound %}#}
+                {#{% set label_attr = label_attr|merge({'for': id}) %}#}
+            {#{% endif %}#}
+            {#{% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ 'col-lg-3 control-label')|trim}) %}#}
+            {#{% if required %}#}
+                {#{% set label_attr = label_attr|merge({'class': label_attr.class ~ ' form-control-label--required'}) %}#}
+            {#{% endif %}#}
+            {#{% if label is empty %}#}
+                {#{% set label = name|humanize %}#}
+            {#{% endif %}#}
+            {#<label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>#}
+            {#{{ label|trans({}, translation_domain) }}{% if required %} *{% endif %}#}
+            {#</label>#}
+        {#{% endif %}#}
+    {#{% endspaceless %}#}
+{#{% endblock form_label %}#}

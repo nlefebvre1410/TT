@@ -1,0 +1,45 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    <form id="app__login__form" action="{{ path("fos_user_security_check") }}" method="post">
+
+        {% if error %}
+            <div class="alert alert-danger">
+                {{ 'Wrong password or email' | trans }}
+                <button type="button" class="close" aria-label="Close" data-dismiss="alert">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        {% endif %}
+        <div class="panel panel-body login-form">
+            <div class="text-center">
+                <div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
+                <h5 class="content-group">Connectez-vous à votre compte.<small class="display-block">Entrez vos informations ci-dessous.</small></h5>
+            </div>
+            <div class="form-group has-feedback has-feedback-left">
+                <input type="text" class="form-control"  id="username"  name="_username" value="{{ last_username }}" placeholder="Nom d'utilisateur" autofocus>
+                <div class="form-control-feedback">
+                    <i class="icon-user text-muted"></i>
+                </div>
+            </div>
+
+            <div class="form-group has-feedback has-feedback-left">
+                <input type="password" class="form-control" id="password"  name="_password" value="" placeholder="{{ 'Mot de passe' | trans }}">
+                <div class="form-control-feedback">
+                    <i class="icon-lock2 text-muted"></i>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">{{ 'Connexion' | trans }}<i class="icon-circle-right2 position-right"></i></button>
+            <div class="text-center">
+                <a href="{{ path('fos_user_resetting_request') }}" >
+                    {{ ' Oublié mon mot de passe ?'| trans }}
+                </a>
+            </div>
+        </div>
+    </form>
+
+
+
+{% endblock fos_user_content %}
+

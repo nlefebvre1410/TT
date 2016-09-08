@@ -1,0 +1,42 @@
+parameters:
+    czbundle-czmanager-class: 'Cz\ManagerBundle\Manager\CzManager'
+    cz_manager.menubuilder.class: 'Cz\ManagerBundle\Helper\Menu\MenuBuilder'
+    cz_manager.piwik.class: 'Cz\ManagerBundle\Helper\Piwik\PiwikAPI'
+    cz_manager.images.class: 'Cz\ManagerBundle\Helper\Images\FileUploader'
+    cz_manager.domain_configuration.class: 'Cz\ManagerBundle\Helper\Utils\DomainConfiguration'
+    cz_manager.route.class: 'Cz\ManagerBundle\Routing\SlugRouter'
+
+services:
+     cz.czmanager:
+            class: %czbundle-czmanager-class%
+            arguments: ["@doctrine.orm.entity_manager"]
+
+     cz_manager.menubuilder:
+             class: '%cz_manager.menubuilder.class%'
+             arguments: ['@service_container']
+
+     cz_manager.menu.twig.extension:
+            class: Cz\ManagerBundle\Twig\MenuTwigExtension
+            arguments: ['@cz_manager.menubuilder']
+            tags:
+                -  { name: 'twig.extension' }
+     cz_manager.piwik:
+            class: %cz_manager.piwik.class%
+
+     cz_manager.fileuploader:
+             class: %cz_manager.images.class%
+             arguments: [ @doctrine.orm.entity_manager, @request_stack, @validator, @kernel ]
+
+     cz_manager.domain_configuration:
+           class: '%cz_manager.domain_configuration.class%'
+           arguments: ['@service_container']
+
+     cz_routing_slugrouter:
+             class: '%cz_manager.route.class%'
+             arguments: [@service_container]
+             tags:
+                 - { name: router, priority: 0 }
+     cz_admin.tabs.twig.extension:
+        class: Cz\ManagerBundle\Twig\TabsTwigExtension
+        tags:
+            - { name: twig.extension }

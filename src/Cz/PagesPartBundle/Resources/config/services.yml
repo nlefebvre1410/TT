@@ -1,0 +1,45 @@
+parameters:
+    cz_pagepart.page_part_configuration_reader.class: 'Cz\PagesPartBundle\PagePartConfigurationReader\PagePartConfigurationReader'
+    cz_pagepart.page_part_configuration_parser.class: 'Cz\PagesPartBundle\PagePartConfigurationReader\PagePartConfigurationParser'
+
+    cz_pagepart.page_template_configuration_reader.class: 'Cz\PagesPartBundle\PageTemplate\PageTemplateConfigurationReader'
+    cz_pagepart.page_template_configuration_parser.class: 'Cz\PagesPartBundle\PageTemplate\PageTemplateConfigurationParser'
+
+    cz_page_part.page_template.page_template_configuration_service.class: 'Cz\PagesPartBundle\PageTemplate\PageTemplateConfigurationService'
+
+services:
+  cz_page_part.page_template_configuration_reader:
+          class: '%cz_pagepart.page_template_configuration_reader.class%'
+          arguments: [ '@cz_page_part.page_template_configuration_parser' ]
+  cz_page_part.page_template_configuration_parser:
+          class: '%cz_pagepart.page_template_configuration_parser.class%'
+          public: false
+          arguments: [ '@kernel', '%cz_page_part.page_templates_presets%' ]
+
+
+  cz_page_part.page_template.page_template_configuration_service:
+         class: '%cz_page_part.page_template.page_template_configuration_service.class%'
+         arguments:
+           - '@cz_page_part.repository.page_template_configuration'
+           - '@cz_page_part.page_template_configuration_reader'
+  cz_page_part.repository.page_template_configuration:
+        class: 'Cz\PagesPartBundle\Repository\PageTemplateConfigurationRepository'
+        public: false
+        factory: [ '@doctrine.orm.entity_manager', 'getRepository' ]
+        arguments:
+          - 'CzPagesPartBundle:PageTemplateConfiguration'
+
+
+  cz_pageparts.twig.extension:
+        class: 'Cz\PagesPartBundle\Twig\Extension\PagePartTwigExtension'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: twig.extension }
+
+  cz_pagetemplate.twig.extension:
+      class: 'Cz\PagesPartBundle\Twig\Extension\PageTemplateTwigExtension'
+      arguments:
+          - '@cz_page_part.page_template.page_template_configuration_service'
+      tags:
+          - { name: twig.extension }

@@ -1,0 +1,66 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: nicolaslefebvre
+ * Date: 03/09/2016
+ * Time: 21:15
+ */
+
+namespace Acme\ContentBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Cz\ManagerBundle\Entity\AbstractEntity;
+/**
+ * Content
+ *
+ * @ORM\Table(name="content_urls")
+ * @ORM\Entity()
+ */
+class UrlContents
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * Unidirectional - Many users have marked many comments as read
+     *
+     * @ORM\ManyToMany(targetEntity="Acme\ContentBundle\Entity\Content", cascade={"persist", "remove"})
+     * @ORM\JoinTable(name="name_route_url",
+     *   joinColumns={@ORM\JoinColumn(name="urlcontent_id", referencedColumnName="id")},
+     *   inverseJoinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")}
+     * )
+     */
+    private $content;
+
+
+    public function __construct()
+    {
+        $this->content = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+
+
+}

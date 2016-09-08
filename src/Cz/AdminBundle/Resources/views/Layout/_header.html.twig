@@ -1,0 +1,38 @@
+<!-- Page header -->
+<div class="page-header page-header-default page-header-xs">
+    <div class="page-header-content">
+        <div class="page-title">
+            {#{{ dump(adminmenu.current ) }}#}
+            {% if adminmenu.current %}
+                <h4><i class="icon-checkmark-circle2 icon-2x position-left"></i> <span class="text-semibold text-capitalize">{{ adminmenu.current.category | trans }}</span></h4> {% block page_header_addition %}{% endblock %}
+            {% else %}
+            <h4><i class="icon-checkmark-circle2 icon-2x position-left"></i> <span class="text-semibold text-capitalize">bonjours</span></h4>
+            {% endif %}
+
+
+        </div>
+
+        <div class="heading-elements">
+            <div class="heading-btn">
+                <a href="#" class="btn btn-link has-text"><i class="icon-undo2"></i></a>|
+                <a href="#" class="btn btn-link  has-text"><i class="icon-redo2"></i></a>
+            </div>
+                <button class="btn bg-slate btn-labeled heading-btn" type="button"><b><i class="icon-eye"></i></b>Aperçu</button>
+
+            <div class="heading-btn">
+                <button type="submit" class="btn btn-info">Enregistrer</button>
+                <button type="button" class="btn btn-default">Publier <i class="icon-arrow-right32"></i></button>
+            </div>
+        </div>
+        {#<div class="heading-elements">#}
+
+            {#<a href="#" class="btn btn-labeled btn-labeled-right bg-blue heading-btn">Button <b><i class="icon-menu7"></i></b></a>#}
+
+
+        {#</div>#}
+    </div>
+
+
+</div>
+
+<!-- /page header -->

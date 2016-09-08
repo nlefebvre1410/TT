@@ -1,0 +1,34 @@
+czadminbundle_default:
+    resource: "@CzAdminBundle/Controller/DefaultController.php"
+    prefix:   /
+    type:     annotation
+
+
+cz_admin_acceuil:
+    resource: "@CzAdminBundle/Controller/AccueilAdminController.php"
+    type:     annotation
+
+cz_admin_chambre_generale:
+    resource: "@CzAdminBundle/Controller/ChambreGeneraleController.php"
+    type:     annotation
+
+cz_admin_services_accueil:
+    resource: "@CzAdminBundle/Controller/ServicesAccueilController.php"
+    type:     annotation
+
+czadminbundle_pages:
+    resource: "@CzAdminBundle/Controller/PagesCarrouselController.php"
+    type:     annotation
+    prefix:   /admin/pages
+
+czadminbundle_carrousel:
+    resource: "@CzAdminBundle/Controller/CarrouselController.php"
+    type:     annotation
+    prefix:   /
+czadminbundle_chambre:
+    resource: "@CzAdminBundle/Controller/ChambreController.php"
+    type:     annotation
+    prefix:   /
+cz_admin_chambre_details:
+    resource: "@CzAdminBundle/Controller/ChambreDetailsController.php"
+    type:     annotation

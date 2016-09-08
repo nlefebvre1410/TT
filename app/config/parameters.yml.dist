@@ -1,0 +1,23 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_driver: pdo_mysql
+    database_host: localhost
+    database_port: null
+    database_name: symfonyTT
+    database_user: root
+    database_password: root
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: 042ddf9c671288c048925bb6f89a7b287932995e
+    multilanguage: true
+    defaultlocale: fr
+    requiredlocales: fr|en
+    locale: fr
+    locales:
+        - en
+        - fr
+    websitetitle: Pro
+    session_prefix: project
+    doctrine.server_version: 5.6

@@ -1,0 +1,30 @@
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+<form action="{{ path('CzAdminBundle_mange') }}" method="POST" {{ form_enctype(form) }} class="form">
+    <section class="form-group">
+        {{ form_label(form.title) }}
+        {{ form_widget(form.title) }}
+    </section>
+    <section class="form-group">
+        {{ form_label(form.author) }}
+        {{ form_widget(form.author) }}
+    </section>
+
+    {% set prototype_tome = form.tomes.vars.prototype %}
+
+
+    <div id="prototype-tome" class="prototype-tome hide">
+        <section class="form-group">
+            {{ form_widget(prototype_tome.number) }}
+        </section>
+        <section class="form-group">
+            {{ form_widget(prototype_tome.nbPages) }}
+        </section>
+    </div>
+    {{ form_widget(form._token) }}
+    <section id="container-tome">
+        <div>
+            <button type="submit" id="add-tome" class="btn btn-success">Ajouter un tome</button>
+        </div>
+    </section>
+</form>

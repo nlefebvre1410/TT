@@ -1,0 +1,40 @@
+{% block css %}
+    {% stylesheets
+    "@CzAdminBundle/Resources/public/css/bootstrap.css"
+    "@CzAdminBundle/Resources/public/css/colors.css"
+    "@CzAdminBundle/Resources/public/css/components.css"
+    "@CzAdminBundle/Resources/public/css/core.css"
+    "@CzAdminBundle/Resources/public/css/extras/animate.min.css"
+    "@CzAdminBundle/Resources/public/css/stylesAdmin.css"
+    output="CzAdminBundleBundleAssets/css/style.min.css" filter='cssrewrite'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" >
+    {% endstylesheets %}
+{% endblock %}
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/plugins/loaders/pace.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/core/libraries/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/core/libraries/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/plugins/loaders/blockui.min.js') }}"></script>
+<!-- /core JS files -->
+
+<!-- Theme JS files -->
+<script type="text/javascript" src="{{ asset('assets/js/plugins/forms/styling/uniform.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/plugins/forms/styling/switchery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/plugins/forms/styling/switch.min.js') }}"></script>
+
+<script type="text/javascript" src="{{ asset('assets/js/core/app.js')}}') }}"></script>
+
+<script type="text/javascript" src="{{ asset('assets/js/pages/uploader_bootstrap.js') }}'"></script>
+<script type="text/javascript" src="{{ asset('assets/js/plugins/uploaders/fileinput.min.js') }}'"></script>
+<script type="text/javascript" src="{{ asset('assets/js/core/libraries/jquery_ui/full.min.js') }}'"></script>
+<script type="text/javascript" src="{{ asset('bundles/czadmin/js/plugins/visualization/echarts/echarts.js') }}'"></script>
+
+<script type="text/javascript">
+    require.config({
+        paths: {
+            echarts: './js/dist'
+        }
+    });
+</script>

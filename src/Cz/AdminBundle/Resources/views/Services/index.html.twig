@@ -1,0 +1,260 @@
+{% extends '@CzAdmin/Layout/layout.html.twig' %}
+
+{% block title %}CzAdminBundle:Carrousel:carrousel{% endblock %}
+
+{% block content %}
+
+    {% include '@CzAdmin/Layout/_header.global.html.twig' %}
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h5 class="panel-title">LISTE DES SERVICES</h5>
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+                            <li><a data-action="collapse"></a></li>
+                            <li><a data-action="reload"></a></li>
+                            <li><a data-action="close"></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="blue">Services</h3>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p>Sélectionner les pictos</p>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="ui-widget ui-helper-clearfix panel div-gallery">
+
+                                <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
+                                    <li class="ui-widget-content ui-corner-tr not-empty">
+                                        <img class="picto-img" src="/CzAdminBundleBundleAssets/img/tv.png" />
+                                        <p class="picto-p">Nom du picto</p>
+                                    </li>
+                                    <li class="ui-widget-content ui-corner-tr not-empty">
+                                        <img class="picto-img" src="/CzAdminBundleBundleAssets/img/tv.png" />
+                                        <p class="picto-p">Nom du picto2</p>
+                                    </li>
+                                    <li class="ui-widget-content ui-corner-tr not-empty">
+                                        <img class="picto-img" src="/CzAdminBundleBundleAssets/img/tv.png" />
+                                        <p class="picto-p">Nom du picto4</p>
+                                    </li>
+                                    <li class="ui-widget-content ui-corner-tr not-empty">
+                                        <img class="picto-img" src="/CzAdminBundleBundleAssets/img/tv.png" />
+                                        <p class="picto-p">Nom du picto3</p>
+                                    </li>
+
+                                    <li class="ui-widget-content ui-corner-tr empty">
+
+                                    </li>
+                                    <li class="ui-widget-content ui-corner-tr empty">
+
+                                    </li>
+                                    <li class="ui-widget-content ui-corner-tr empty">
+
+                                    </li>
+                                    <li class="ui-widget-content ui-corner-tr empty">
+
+                                    </li>
+                                    <li class="ui-widget-content ui-corner-tr empty">
+
+                                    </li>
+                                    <li class="ui-widget-content ui-corner-tr empty">
+
+                                    </li>
+                                    <li class="ui-widget-content ui-corner-tr empty">
+
+                                    </li>
+                                    <li class="ui-widget-content ui-corner-tr empty">
+
+                                    </li>
+                                    <li class="ui-widget-content ui-corner-tr empty">
+
+                                    </li>
+                                    <li class="ui-widget-content ui-corner-tr empty">
+
+                                    </li>
+                                    <li class="ui-widget-content ui-corner-tr empty">
+
+                                    </li>
+                                    <li class="ui-widget-content ui-corner-tr empty">
+
+                                    </li>
+                                    <li class="ui-widget-content ui-corner-tr empty">
+
+                                    </li>
+                                    <li class="ui-widget-content ui-corner-tr empty">
+
+                                    </li>
+                                    <li class="ui-widget-content ui-corner-tr empty">
+
+                                    </li>
+                                    <li class="ui-widget-content ui-corner-tr empty">
+
+                                    </li>
+                                    <li class="ui-widget-content ui-corner-tr empty">
+
+                                    </li>
+                                    <li class="ui-widget-content ui-corner-tr empty">
+
+                                    </li>
+                                    <li class="ui-widget-content ui-corner-tr empty">
+
+
+                                </ul>
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p>Modifier si nécessaire les intitulés</p>
+                        </div>
+                        <div class="col-md-8">
+
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="fr">FRANCAIS</div>
+                                <div class="tab-pane fade" id="en">ANGLAIS</div>
+                            </div>
+
+
+                            <div id="trash" class="ui-widget-content ui-state-default">
+                                <h4 class="ui-widget-header"><span class="ui-icon ui-icon-trash"></span></h4>
+                            </div>
+
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <script>
+        $( function() {
+
+
+
+            // There's the gallery and the trash
+            var $gallery = $( "#gallery" )
+            var $trash = $( "#trash" );
+
+            // Let the gallery items be draggable
+            $( "li", $gallery ).draggable({
+                cancel: "a.ui-icon", // clicking an icon won't initiate dragging
+                revert: "invalid", // when not dropped, the item will revert back to its initial position
+                containment: "document",
+                helper: "clone",
+                cursor: "move"
+
+            });
+
+            // Let the trash be droppable, accepting the gallery items
+            $trash.droppable({
+                accept: "#gallery > li",
+                classes: {
+                    "ui-droppable-active": "ui-state-highlight"
+                },
+                drop: function( event, ui ) {
+
+                    deleteImage(ui.draggable);
+
+                }
+            });
+
+            var recycle_icon = "<a href='#' class='a-r ui-icon ui-icon-refresh icon-x'></a>";
+            var edit_icon = "<a href='#' class='a-l ui-icon ui-icon-edit icon-pencil'></a>";
+            function deleteImage( $item ) {
+
+                $item.fadeOut(function() {
+                    var $list = $( "ul", $trash ).length ?
+                            $( "ul", $trash ) :
+                            $( "<ul class='gallery ui-helper-reset'/>" ).appendTo( $trash );
+
+                    // $item.find( "a.ui-icon-trash" ).remove();
+                    $('.picto-img', $item).removeClass('picto-img').addClass('picto-img-trash');
+                    $('.picto-p', $item).removeClass('picto-p').addClass('picto-p-trash');
+                    $('.picto-img-trash', $item).parent().addClass('li-trash');
+
+                    $item.append( edit_icon).append( recycle_icon ).appendTo( $list ).fadeIn(function() {
+                    });
+                });
+            }
+
+
+            // Let the gallery be droppable as well, accepting items from the trash
+            $gallery.droppable({
+                accept: "#trash li",
+                classes: {
+                    "ui-droppable-active": "custom-state-active"
+                },
+                drop: function( event, ui ) {
+                    recycleImage( ui.draggable );
+                }
+            });
+
+            // Image deletion function
+
+            function recycleImage( $item ) {
+                $item.fadeOut(function() {
+
+                    $('.picto-img-trash', $item).removeClass('picto-img-trash').addClass('picto-img');
+                    $('.picto-p-trash', $item).removeClass('picto-p-trash').addClass('picto-p');
+                    $('.picto-img', $item).parent().removeClass('li-trash');
+
+
+                    $item
+                            .find( "a.ui-icon-refresh" )
+                            .remove()
+                            .end()
+                            .find( "a.ui-icon-edit" )
+                            .remove()
+                            .end()
+                            .appendTo( $gallery )
+                            .fadeIn();
+                });
+            }
+
+
+            // Resolve the icons behavior with event delegation
+            // Resolve the icons behavior with event delegation
+            $( "ul.gallery > li" ).on( "click", function( event ) {
+                var $item = $( this ),
+                        $target = $( event.target );
+
+                if ( $target.is( "a.ui-icon-trash" ) ) {
+                    deleteImage( $item );
+                } else if ( $target.is( "a.ui-icon-zoomin" ) ) {
+                    viewLargerImage( $target );
+                } else if ( $target.is( "a.ui-icon-refresh" ) ) {
+                    recycleImage( $item );
+                }
+
+                return false;
+            });
+
+
+
+
+        } );
+    </script>
+
+
+{% endblock %}

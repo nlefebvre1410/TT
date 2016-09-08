@@ -1,0 +1,116 @@
+{% extends '@CzAdmin/Layout/layout.html.twig' %}
+
+{% block title %}CzAdminBundle:Carrousel:carrousel{% endblock %}
+
+{% block content %}
+    {{ form_start(form, {'action': path(app.request.attributes.get('_route')),'enctype':'multipart/form-data', 'attr': {'class': 'form-horizontal'}}) }}
+    {% include '@CzAdmin/Layout/_header.global.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12">
+        {% form_theme form 'CzAdminBundle:Form:fields.html.twig' %}
+
+        {{ form_errors(form) }}
+        <div class="panel panel-flat">
+            <div class="panel-heading">
+                <h5 class="panel-title">Basic layout</h5>
+                <div class="heading-elements">
+                    <ul class="icons-list">
+                        <li><a data-action="collapse"></a></li>
+                        <li><a data-action="reload"></a></li>
+                        <li><a data-action="close"></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <h6>Format</h6>
+
+
+                <div class="form-group">
+                    {% macro widget_prototype(widget, remove_text) %}
+                        {% if widget.vars.prototype %}
+                            {% set form = widget.vars.prototype %}
+                            {% set name = widget.vars.name %}
+                        {% else %}
+                            {% set form = widget %}
+                            {% set name = widget.vars.full_name %}
+                        {% endif %}
+                    <div class="form-group">
+                        <div data-content="{{ name }}">
+
+                            {{ form_label(form.image, "Choisir un nom", {'label_attr': {'class': 'col-lg-3 control-label'}}) }}
+                            <div class="col-lg-8">
+                            {{ form_widget(form) }}
+                                </div>
+                              <button id="remove" class="btn-remove" data-related="{{ name }}"><li class="icon-x"></li></button>
+                        </div>
+                        </div>
+                    {% endmacro %}
+                    <div id="post_tags" data-prototype="{{ _self.widget_prototype(form.image, 'Remove Im Image')|escape }}">
+                    {% for widget in form.image.children %}
+                    {{ _self.widget_prototype(widget, 'Remove Image') }}
+                    {% endfor %}
+                    </div>
+                    <a class="btn btn-pr btn-add" data-target="post_tags">Ajoute Image</a>
+
+
+
+                    <div class="form-group">
+                    {{ form_label(form.nomhotel, "Choisir un nom", {'label_attr': {'class': 'col-lg-3 control-label'}}) }}
+                     {{ form_widget(form.nomhotel) }}
+                        </div>
+                    <div class="col-lg-12">
+                    {{ form_widget(form.translations, {'class': 'form-control'})  }}
+                        </div>
+
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+    <script>
+
+        $(function(){
+
+            $('.btn-add').click(function(event) {
+
+                var collectionHolder = $('#' + $(this).attr('data-target'));
+                var prototype = collectionHolder.attr('data-prototype');
+                var form = prototype.replace(/__name__/g, collectionHolder.children().length);
+
+                collectionHolder.append(form);
+                $('.file-input-custom').fileinput({
+                    previewFileType: 'image',
+                    language: "fr",
+                    browseLabel: 'Select',
+                    browseClass: 'btn bg-slate-700',
+                    browseIcon: '<i class="icon-image2 position-left"></i> ',
+                    removeLabel: 'Remove',
+                    removeClass: 'btn btn-danger',
+                    removeIcon: '<i class="icon-cancel-square position-left"></i> ',
+                    uploadClass: 'btn bg-teal-400',
+                    uploadIcon: '<i class="icon-file-upload position-left"></i> ',
+                    layoutTemplates: {
+                        icon: '<i class="icon-file-check"></i>'
+                    },
+                    initialPreview: [
+
+
+                    ],
+                    initialCaption: "Please select images",
+                    mainClass: 'input-group'
+                });
+                return false;
+            });
+            $(document).on('click', ".btn-remove", function(event) {
+
+                var name = $(this).attr('data-related');
+                $(this).parent('*[data-content="'+name+'"]').remove();
+
+                return false;
+            });
+        });
+    </script>
+
+    {% endblock %}
+

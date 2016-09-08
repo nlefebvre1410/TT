@@ -1,0 +1,7 @@
+{% extends 'CzTestLangBundle:Page:layout.html.twig' %}
+
+{% block content %}
+        {{ dump(page) }}
+        {#{{ page.title }}#}
+        {{ render_pagetemplate(page) }}
+{% endblock %}

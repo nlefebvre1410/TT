@@ -1,0 +1,244 @@
+{% extends '@CzAdmin/Layout/layout.html.twig' %}
+
+{% block title %}CzAdminBundle:Carrousel:carrousel{% endblock %}
+
+{% block content %}
+    {% include '@CzAdmin/Layout/_header.global.html.twig' %}
+    <div class="row">
+        <div class="col-md-12">
+
+
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h5 class="panel-title">Les Chiffres</h5>
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+                            <li><a data-action="collapse"></a></li>
+                            <li><a data-action="reload"></a></li>
+                            <li><a data-action="close"></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-5">
+
+                            <div class="stats-button btn-group btn-group-lg" role="group" aria-label="...">
+                                <button type="button" class="piwik-btn btn btn-default ajax-piwik piwik-selected" data-value="hour">Heures</button>
+                                <button type="button" class="piwik-btn btn btn-default ajax-piwik" data-value="day">Jours</button>
+                                <button type="button" class="piwik-btn btn btn-default ajax-piwik" data-value="month">Mois</button>
+                                <button type="button" class="piwik-btn btn btn-default ajax-piwik" data-value="year">Années</button>
+                            </div>
+
+                        </div>
+                        <div class="col-md-3 col-md-offset-3">
+                            <label class="radio-inline">
+                                Visiteurs <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="all" checked="checked" class="radio-filter ajax-piwik">
+                            </label>
+                            <label class="radio-inline">
+                                Visiteurs uniques  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="uniq" class="radio-filter ajax-piwik">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        {#<div class="col-md-3"></div>#}
+                        {#<div data-url="{{ path('CzAdminBundle_stats_piwik') }}" id="graph_stat" class="col-md-6" style="height:400px;"></div>#}
+                        {#<div class="col-md-3"></div>#}
+                        <div class="panel-body">
+                            <div class="chart-container">
+                                <div  data-url="{{ path('CzAdminBundle_stats_piwik') }}"  class="chart has-fixed-height" id="graph_stat"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3 panel text-center" style="padding: 20px">
+                            <h3>Visites</h3>
+                            <p>
+                                Nombre de visites effectuées par les<br/> internautes de votre site
+                            </p>
+                            <p class="visit-blue visit-all-number">
+
+                            </p>
+                        </div>
+                        <div class="col-md-3 panel text-center" style="padding: 20px;margin-left: 10px">
+                            <h3>Visiteurs uniques</h3>
+                            <p>
+                                Nombre d'internautes accédant au moins une fois au site. Si un même visiteur revient 2 fois dans le même mois, on enregistre 2 visites mais une seul visiteur unique.
+
+                            </p>
+                            <p class="visit-blue visit-uniq-number">
+
+                            </p>
+                        </div>
+                        <div class="col-md-3"></div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <script type="application/javascript">
+
+        $(function() {
+
+            var keys = [];
+            var values = [];
+            var myChart;
+            var option;
+
+            $(".piwik-btn").click(function(){
+
+                $('.piwik-btn').removeClass('piwik-selected');
+                $(this).addClass('piwik-selected');
+
+            });
+
+            function reloadpiwik(){
+
+                if ($(this).hasClass('piwik-btn')) {
+                    $('.piwik-btn').removeClass('piwik-selected');
+                    $(this).addClass('piwik-selected');
+                }
+
+                var radio_filter = $('.radio-filter:checked').attr('value');
+                var btn_filter =   $('.piwik-selected').attr('data-value');
+
+                var url = $('#graph_stat').attr('data-url');
+
+                $.ajax({
+                    url: url + "?visit=" + radio_filter + "&range=" + btn_filter,
+                    success: function (data) {
+
+
+                        keys = [];
+                        values = [];
+                        var i = 0;
+                        var obj = jQuery.parseJSON( data );
+
+                        $('.visit-all-number').html(obj[1][0]);
+                        $('.visit-uniq-number').html(obj[1][0]);
+
+
+                        for (key in obj[0]) {
+                            keys[i] = key;
+                            values[i] = obj[0][key];
+                            i = i+1;
+                        }
+
+                        console.log(keys);
+                        console.log(values);
+                        console.log(option);
+                        myChart.clear();
+
+                        option.xAxis[0].data = keys;
+                        option.series[0].data = values;
+
+
+
+                        myChart.setOption(option);
+                        myChart.refresh();
+                        myChart.setTheme('macarons');
+
+                    }
+                });
+
+
+                return true;
+
+            }
+
+            $(".ajax-piwik").click(function(){
+
+
+                reloadpiwik();
+
+
+            });
+
+
+            // Set paths
+            // ------------------------------
+
+            require.config({
+                paths: {
+                    echarts: '/assets/js/plugins/visualization/echarts'
+                }
+            });
+
+
+            // Configuration
+            // ------------------------------
+
+            require(
+                    [
+                        'echarts',
+                        'echarts/theme/limitless',
+                        'echarts/chart/bar',
+                        'echarts/chart/line'
+                    ],
+                    function (ec) {
+                        myChart = ec.init(document.getElementById('graph_stat'));
+                        option = {   title : {
+                        },
+                            tooltip : {
+                                trigger: 'axis'
+                            },
+                            toolbox: {
+                            },
+                            calculable : true,
+                            xAxis : [
+                                {
+                                    type : 'category',
+                                    boundaryGap : false,
+                                    data : ['Lundi 24/04','Lundi 24/04','Lundi 24/04','Lundi 24/04','Lundi 24/04','Lundi 24/04','Lundi 24/04']
+                                }
+                            ],
+                            yAxis : [
+                                {
+                                    type : 'value',
+                                    axisLabel : {
+                                        formatter: ''
+                                    }
+                                }
+                            ],
+                            series : [
+                                {
+                                    name:'',
+                                    type:'line',
+                                    itemStyle: {
+                                        lineStyle : {
+                                            width: 3
+                                        }
+                                    },
+                                    data:[11, 11, 15, 13, 12, 13, 10],
+                                    markPoint : {
+                                        data : [
+                                        ]
+                                    },
+                                    markLine : {
+                                        data : [
+                                        ]
+                                    }
+                                },
+
+                            ]};
+
+                        reloadpiwik();
+
+                    }
+            );
+
+
+
+        });
+
+    </script>
+
+
+{% endblock %}
+

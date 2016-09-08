@@ -1,0 +1,69 @@
+{% extends '@CzAdmin/Layout/layout.html.twig' %}
+{% block content %}
+    {% macro widget_prototype(widget, remove_text) %}
+        {% if widget.vars.prototype %}
+            {% set form = widget.vars.prototype %}
+            {% set name = widget.vars.name %}
+        {% else %}
+            {% set form = widget %}
+            {% set name = widget.vars.full_name %}
+        {% endif %}
+
+        <div data-content="{{ name }}">
+            <a class="btn-remove" data-related="{{ name }}">{{ remove_text }}</a>
+            {{ form_widget(form) }}
+        </div>
+    {% endmacro %}
+    {{ form_start(form, {'action': path(app.request.attributes.get('_route')),'enctype':'multipart/form-data', 'attr': {'class': 'form-horizontal'}}) }}
+    {{ form_row(form) }}
+    {{ form_end(form) }}
+    {#<form action="{{ path('CzAdminBundle_test') }}" method="POST" enctype="multipart/form-data">#}
+
+        {#{{ form_errors(form) }}#}
+        {#<fieldset>#}
+            {#<legend>Add a new post</legend>#}
+            {#{{ form_row(form.name) }}#}
+            {#{{ form_row(form.description) }}#}
+            {#{{ form_row(form.price) }}#}
+            {#{{ form_row(form.type) }}#}
+            {#{{ form_row(form.owner) }}#}
+            {#{{ form_row(form.available) }}#}
+
+            {#<div id="post_tags" data-prototype="{{ _self.widget_prototype(form.images, 'Remove tags')|escape }}">#}
+                {#{% for widget in form.images.children %}#}
+                    {#{{ _self.widget_prototype(widget, 'Remove tags') }}#}
+                {#{% endfor %}#}
+            {#</div>#}
+
+            {#<a class="btn-add" data-target="post_tags">Add tags</a>#}
+        {#</fieldset>#}
+
+        {#{{ form_widget(form._token) }}#}
+
+        {#<input type="submit" value="Add post" />#}
+    {#</form>#}
+
+    <script type="application/javascript">
+
+
+        $(function(){
+            $('.btn-add').click(function(event) {
+                var collectionHolder = $('#' + $(this).attr('data-target'));
+                var prototype = collectionHolder.attr('data-prototype');
+                var form = prototype.replace(/__name__/g, collectionHolder.children().length);
+
+                collectionHolder.append(form);
+
+                return false;
+            });
+            $(document).on('click', ".btn-remove", function(event) {
+                var name = $(this).attr('data-related');
+                $(this).parent('*[data-content="'+name+'"]').remove();
+
+                return false;
+            });
+        });
+
+    </script>
+
+{% endblock %}

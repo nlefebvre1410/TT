@@ -1,0 +1,58 @@
+{% extends '@CzAdmin/Layout/layout.html.twig' %}
+{% block content %}
+    <h1>Demo creation</h1>
+
+    <div class="form_error"></div>
+    <form method="POST" class="ajaxForm" action="{{path('demo_create')}}" {{ form_enctype(form) }}>
+
+        {{form_rest(form)}}
+    </form>
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('CzAdminBundle_homepage') }}">
+                Back to the list
+            </a>
+        </li>
+    </ul>
+    <script>
+        jQuery(document).ready(function() {
+            ajaxForm('.ajaxForm');
+        });
+        function ajaxForm(selector) {
+//quand le formulaire est soumi
+            $(selector).submit( function(event) {
+                // Eviter le comportement par défaut (soumettre le formulaire)
+                event.preventDefault();
+                var $this = $(this);
+                //Ici on peut ajouter un loader...
+                $.ajax({
+                    url: $this.attr('action'),
+                    type: $this.attr('method'),
+                    data: new FormData( $this[0] ),
+                    processData: false,
+                    contentType: false,
+                    statusCode: {
+                        //traitement en cas de succès
+                        200: function(response) {
+                            var successMessage = response.successMessage ;
+                            //on vide les champs formulaires ou on le supprime ou ...
+                            $(selector).trigger("reset");
+                            //on retire le loader...
+                            //on prévient l'utilistateur du bonne envoi...
+
+                        },
+                        //traitement en cas d'erreur (on peut aussi traiter le cas erreur 500...)
+                        412: function(response) {
+                            var errorsForm = response.responseJSON.formErrors;
+                            //on affiche les erreurs...
+                        }
+                        }
+            });
+
+        }
+            )}
+    </script>
+{% endblock %}
+
+

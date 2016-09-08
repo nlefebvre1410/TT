@@ -1,0 +1,201 @@
+imports:
+    - { resource: config_base.yml }
+
+framework:
+    ide:                "phpstorm://open?file=%%f&line=%%l"
+    esi:                { enabled: true }
+    fragments:          { path: /_fragment }
+    translator:         { fallback: %locale% }
+    session:
+        name:               %session_prefix%
+        # set true if no scripting languages need to access the cookie
+        cookie_httponly:    false
+    assets:
+        version:     v1
+
+twig:
+    form:
+       resources: ['bootstrap_3_layout.html.twig']
+    globals:
+        websitetitle: %websitetitle%
+        defaultlocale: %defaultlocale%
+#        lang: %lang%
+        locales: %requiredlocales%
+        requiredlocales: %requiredlocales%
+#        requiredlocales: %requiredlocales%
+#        gtm_code: %analytics.googletagmanager%
+        #titlecolor: "#000000"
+        #titlebgcolor: "#2997CE"
+
+assetic:
+    node: /usr/local/bin/node
+    filters:
+        cssrewrite: ~
+        scss: ~
+        uglifyjs2:
+            bin: /usr/bin/uglifyjs
+            compress: true
+        uglifycss:
+            bin: /usr/bin/uglifycss
+        yui_js:
+            jar: %kernel.root_dir%/Resources/tools/java/yuicompressor-2.4.8.jar
+        jpegoptim:
+            bin: jpegoptim
+            strip_all: true
+            max: 85
+            apply_to: "\\.jpe?g$"
+        optipng:
+            bin: optipng
+            apply_to: "\\.png$"
+            level: 3
+        jpegtran:
+            bin: jpegtran
+            apply_to: "\\.jpe?g$"
+            optimisation: true
+            progressive: true
+
+doctrine:
+    orm:
+        entity_managers:
+            default:
+                auto_mapping: true
+                filters:
+                    oneLocale:
+                        class: A2lix\I18nDoctrineBundle\Doctrine\ORM\Filter\OneLocaleFilter
+                        enabled: true
+                    softdeleteable:
+                        class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
+                        enabled: true
+                mappings:
+                    gedmo_loggable:
+                        type: annotation
+                        prefix: Gedmo\Loggable\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Loggable/Entity"
+                        alias: GedmoLoggable # this one is optional and will default to the name set for the mapping
+                        is_bundle: false
+                    gedmo_tree:
+                        type: annotation
+                        prefix: Gedmo\Tree\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
+                        alias: GedmoTree # this one is optional and will default to the name set for the mapping
+                        is_bundle: false
+
+
+parameters:
+    assetic.cache.class: Assetic\Cache\ArrayCache
+
+stof_doctrine_extensions:
+    default_locale: %defaultlocale%
+    uploadable:
+       default_file_path: %kernel.root_dir%/../web/uploads
+       default_file_info_class: Stof\DoctrineExtensionsBundle\Uploadable\UploadedFileInfo
+    translation_fallback: true
+    orm:
+        default:
+            loggable: true
+            translatable: true
+            sluggable: true
+            uploadable: true
+
+white_october_pagerfanta:
+    default_view: twitter_bootstrap
+
+a2lix_translation_form:
+    locale_provider: default       # [1]
+    locales: [fr,en]          # [1-a]
+    default_locale: fr             # [1-b]
+    required_locales: [fr]         # [1-c]
+    manager_registry: doctrine      # [2]
+#    templating: "A2lixTranslationFormBundle::default.html.twig"      # [3]
+    templating: "CzAdminBundle:A2lix:default.html.twig"      # [3]
+
+a2lix_i18n_doctrine:
+    manager_registry: doctrine       # [1]
+
+
+liip_imagine:
+    resolvers:
+        default:
+            web_path:
+                cache_prefix: uploads/cache
+    driver: imagick
+    data_loader: default
+    filter_sets:
+        optim:
+            quality: 85
+            format: jpg
+            filters:
+                strip: ~
+        optimjpg:
+            quality: 85
+            format: jpg
+            filters:
+                strip: ~
+        optimpng:
+            quality: 85
+            format: png
+            filters:
+                strip: ~
+
+        # ImagePagePart srcset JPG filters
+        image_huge_jpg:
+            quality: 95
+            format: jpg
+            filters:
+                strip: ~
+                thumbnail: { size: [2400,null], mode: outbound, allow_upscale: false }
+        image_big_jpg:
+            quality: 95
+            format: jpg
+            filters:
+                strip: ~
+                thumbnail: { size: [1200,null], mode: outbound, allow_upscale: false }
+        image_medium_jpg:
+            quality: 95
+            format: jpg
+            filters:
+                strip: ~
+                thumbnail: { size: [600,null], mode: outbound, allow_upscale: false }
+        image_small_jpg:
+            quality: 95
+            format: jpg
+            filters:
+                strip: ~
+                thumbnail: { size: [400,null], mode: outbound, allow_upscale: false }
+
+        # ImagePagePart srcset PNG filters
+        image_huge_png:
+            quality: 95
+            format: png
+            filters:
+                strip: ~
+                thumbnail: { size: [2400,null], mode: outbound, allow_upscale: false }
+        image_big_png:
+            quality: 95
+            format: png
+            filters:
+                strip: ~
+                thumbnail: { size: [1200,null], mode: outbound, allow_upscale: false }
+        image_medium_png:
+            quality: 95
+            format: png
+            filters:
+                strip: ~
+                thumbnail: { size: [600,null], mode: outbound, allow_upscale: false }
+        image_small_png:
+            quality: 95
+            format: png
+            filters:
+                strip: ~
+                thumbnail: { size: [400,null], mode: outbound, allow_upscale: false }
+
+lunetics_locale:
+  guessing_order:
+    - router
+    - browser
+  allowed_locales: %locales%
+kunstmaan_language_chooser:
+    autodetectlanguage: true
+    showlanguagechooser: true
+    languagechoosertemplate: AmeContentBundle:Default:language-chooser.html.twig
+    languagechooserlocales: %locales%

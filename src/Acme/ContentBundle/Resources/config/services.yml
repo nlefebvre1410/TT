@@ -1,0 +1,27 @@
+parameters:
+#    cz_admin.example.class: Cz\AdminBundle\Example
+
+services:
+#    cz_admin.example:
+#        class: %cz_admin.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+     acme.content.content:
+          class: Acme\ContentBundle\Services\Test
+          arguments: [@doctrine.orm.entity_manager]
+
+#     cz_routing_slugrouter:
+ #            class: Acme\ContentBundle\Routing\SlugRouter
+ #            arguments: [@service_container]
+ #            tags:
+ #                - { name: router, priority: 0 }
+ #
+#     cz_manager.domain_configuration:
+#           class: Acme\ContentBundle\Services\DomainConfiguration
+#           arguments: ['@service_container']
+#
+#     cz_manager.render.context.listener:
+#        class: Acme\ContentBundle\Services\RenderContextListener
+#        arguments: ['@templating', '@doctrine.orm.entity_manager']
+#        tags:
+#            - { name: kernel.event_listener, event: kernel.view, method: onKernelView }

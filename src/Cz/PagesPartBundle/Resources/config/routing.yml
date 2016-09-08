@@ -1,0 +1,5 @@
+KunstmaanMediaBundle_pagepartadmin:
+    resource: '@CzPagesPartBundle/Controller/PagePartAdminController.php'
+    type:     annotation
+    prefix:   /admin
+

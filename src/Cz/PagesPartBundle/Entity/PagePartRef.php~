@@ -1,0 +1,73 @@
+<?php
+
+namespace Cz\PagesPartBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\EntityManager;
+/**
+ * PagePartRef
+ *  @ORM\Entity(repositoryClass="Cz\PagesPartBundle\Repository\PagePartRefRepository")
+ *  @ORM\Table(name="cz_page_part_refs", indexes={@ORM\Index(name="idx_page_part_search", columns={"page_Id", "pageEntityname", "context"})})
+ *  @ORM\HasLifecycleCallbacks()
+ */
+class PagePartRef
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="bigint")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="bigint", name="page_id")
+     */
+    protected $pageId;
+
+    /**
+     * @ORM\Column(type="string", name="pageEntityname"))
+     */
+    protected $pageEntityname;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $context;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $sequencenumber;
+
+    /**
+     * @ORM\Column(type="bigint")
+     */
+    protected $pagePartId;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $pagePartEntityName;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $created;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $updated;
+
+    /**
+     * The constructor
+     */
+    public function __construct()
+    {
+        $this->setCreated(new \DateTime());
+        $this->setUpdated(new \DateTime());
+    }
+
+
+}
+

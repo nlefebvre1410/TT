@@ -1,0 +1,79 @@
+{% set adminmenu = get_admin_menu() %}
+{% set extraclasshtml %}{% block extraclasshtml %}
+{% endblock %}{% endset %}
+<!DOCTYPE html>
+<html class="{{ extraclasshtml }}" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+        {#{{ sonata_seo_title() }}#}
+    </title>
+
+
+    {# Favicons #}
+    {% include '@CzAdmin/Layout/_favicons.html.twig' %}
+
+    {# Webfonts #}
+    {% include 'CzAdminBundle:Layout:_webfonts.html.twig' %}
+
+    {# CSS #}
+    {% include '@CzAdmin/Layout/_css.html.twig' %}
+</head>
+
+
+<body class="navbar-top">
+
+    {# nav #}
+    {% block nav %}
+        {% include '@CzAdmin/Layout/_nav.html.twig' %}
+    {% endblock %}
+	<!-- Page container -->
+<div class="page-container">
+
+    <!-- Page content -->
+    <div class="page-content">
+
+                {# Breadcrumbs #}
+                {% block sidebar %}
+                    {% include '@CzAdmin/Layout/_sidebar.html.twig' %}
+                {% endblock %}
+                {# Breadcrumbs #}
+                {% block breadcrumbs %}
+                    {% include '@CzAdmin/Layout/_breadcrumbs.html.twig' %}
+                {% endblock %}
+
+          <!-- main content -->
+          <div class="content-wrapper">
+                {# Header #}
+              <!-- App Content - General Messages -->
+
+                {% block content %}
+
+                {% endblock %}
+
+
+                {# Footer #}
+                {% block footer %}
+                    {% include '@CzAdmin/Layout/_footer.html.twig' %}
+                {% endblock %}
+
+
+
+
+          </div><!-- /content area -->
+
+    </div><!-- /main content -->
+
+</div>
+<!-- /page content -->
+
+</div>
+<!-- /page container -->
+
+    {# JS Footer #}
+    {% include '@CzAdmin/Layout/_js_footer.html.twig' %}
+</body>
+</html>

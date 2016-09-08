@@ -1,0 +1,12 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}CzAdminBundle:Accueil:index{% endblock %}
+
+{% block body %}
+<h1>Welcome to the Accueil:index pagesss</h1>
+<h1>Welcome to the Accueil:index pagesss</h1>
+    <ul class="nav nav-stacked">
+        test
+        {% render(controller('CzAdminBundle:ChambreGenerale:menu')) %}
+    </ul>
+{% endblock %}

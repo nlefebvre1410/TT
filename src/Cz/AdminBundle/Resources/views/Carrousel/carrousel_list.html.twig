@@ -1,0 +1,9 @@
+{% for lists in list %}
+    {% for collect in lists.namecs %}
+    {{ collect.lang }}{{ collect.title }}
+    {% endfor %}
+    {{ lists.format }}
+    {#{{ lists.image.path.AssetPath|imagine_filter('produit') }}#}
+    <img class="img-responsive" src="{{ lists.image.AssetPath|imagine_filter('image_small_png') }}" alt="{{ websitetitle | trans }}">
+
+{% endfor %}

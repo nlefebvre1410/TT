@@ -1,0 +1,4 @@
+{% for page in pages %}
+
+    <li><a href="{{ path('page2', { 'slug' : page.chambre.slug,'slug2':page.slug } ) }}">{{ page.title }}</a>
+{% endfor %}

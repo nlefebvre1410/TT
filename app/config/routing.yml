@@ -1,0 +1,32 @@
+acme_content_content:
+    resource: "@AcmeContentBundle/Controller/ContentController.php"
+    prefix:   /{_locale}/
+    type:     annotation
+    requirements:
+        _locale: %requiredlocales%
+cz_manager:
+    resource: "@CzManagerBundle/Resources/config/routing.yml"
+
+acme_content:
+    resource: "@AcmeContentBundle/Resources/config/routing.yml"
+    prefix:   /{_locale}/
+    requirements:
+        _locale: %requiredlocales%
+
+CzPagePartBundle:
+    resource: "@CzPagesPartBundle/Resources/config/routing.yml"
+    prefix:   /{_locale}/
+    requirements:
+        _locale: %requiredlocales%
+
+cz_admin:
+    resource: "@CzAdminBundle/Resources/config/routing.yml"
+    prefix:   /{_locale}/admin
+    requirements:
+        _locale: %requiredlocales%
+
+_languagechooser:
+    resource: .
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

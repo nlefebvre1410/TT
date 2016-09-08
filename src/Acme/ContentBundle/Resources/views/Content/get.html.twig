@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {#{{ render_pageparts(pages,'main') }}#}
+    {#{{ dump(pages) }}#}
+    {% if pages  %}
+{{ pages.title }}
+        {% endif %}
+{#{% for  t in  pages %}#}
+    {#{{ t.title }}#}
+    {#{% endfor %}#}
+{% endblock %}
