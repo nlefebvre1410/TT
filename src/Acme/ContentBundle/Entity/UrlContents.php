@@ -18,16 +18,9 @@ use Acme\ContentBundle\Entity\Content;
  * @ORM\Table(name="content_urls")
  * @ORM\Entity()
  */
-class UrlContents
+class UrlContents extends AbstractEntity
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+
 
     /**
      * Unidirectional - Many users have marked many comments as read
@@ -42,22 +35,7 @@ class UrlContents
         $this->content = new ArrayCollection();
     }
 
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-    }
     /**
      * @param mixed $id
      */

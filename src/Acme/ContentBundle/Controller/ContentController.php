@@ -6,8 +6,11 @@ use Acme\ContentBundle\Entity\UrlContents;
 use Acme\ContentBundle\Form\UrlContentsType;
 use Cz\AdminBundle\Entity\Entete;
 use Cz\AdminBundle\Form\EnteteType;
+use Cz\ManagerBundle\Event\AdaptFormEvent;
+use Cz\ManagerBundle\Event\CzEvents;
 use Cz\ManagerBundle\FlashMessages\FlashTypes;
 use Cz\ManagerBundle\Helper\FormWidgets\FormWidget;
+use Cz\ManagerBundle\Helper\FormWidgets\ListWidget;
 use Cz\ManagerBundle\Helper\FormWidgets\Tabs\Tab;
 use Cz\ManagerBundle\Helper\FormWidgets\Tabs\TabPane;
 use Cz\ManagerBundle\Helper\RenderContext;
@@ -156,7 +159,8 @@ class ContentController extends Controller
         }
 
         $propertiesWidget->addType('content', $enteteAdminType,   $entete);
-        $tabPane->addTab(new Tab('cz_manager.tab.properties.title', $propertiesWidget));
+        $tabPane->addTab(new Tab('En-Tête', $propertiesWidget));
+
 
         if (!$urlcontent) {
             throw $this->createNotFoundException('No task found for id '.$id);
@@ -170,6 +174,15 @@ class ContentController extends Controller
         }
 
         $editForm = $this->createForm(new UrlContentsType(), $urlcontent);
+        $this->get('event_dispatcher')->dispatch(
+            CzEvents::ADAPT_FORM,
+            new AdaptFormEvent(
+                $request,
+                $tabPane,
+                $urlcontent
+
+            )
+        );
         $tabPane->buildForm();
 
 

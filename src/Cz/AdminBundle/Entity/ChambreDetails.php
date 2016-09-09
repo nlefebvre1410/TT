@@ -18,12 +18,6 @@ class ChambreDetails extends \Cz\ManagerBundle\Entity\AbstractEntity
     protected $translations;
 
 
-
-    /**
-     * @ORM\OneToOne(targetEntity="Cz\AdminBundle\Entity\ChambreGenerale", cascade={"persist","remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $chambre;
     /**
      * Constructor
      */
@@ -31,23 +25,8 @@ class ChambreDetails extends \Cz\ManagerBundle\Entity\AbstractEntity
     {
 
         $this->translations = new ArrayCollection();
-        $this->chambre = $this->getChambre();
+
     }
 
-    public function setChambre(\Cz\AdminBundle\Entity\ChambreGenerale $chambre)
-    {
-        $this->chambre = $chambre;
 
-        return $this;
-    }
-
-    /**
-     * Get chambre
-     *
-     * @return \Cz\AdminBundle\Entity\ChambreGenerale
-     */
-    public function getChambre()
-    {
-        return $this->chambre;
-    }
 }

@@ -21,7 +21,13 @@
                 {#<div class="col-lg-7">#}
 
             {% form_theme edit_form 'AcmeContentBundle:Form:form.html.twig' %}
+                    {% set form = edit_form.content.vars.prototype.children %}
 
+
+                    {#{{ form_widget(form.lang) }}#}
+                    {#{{ form_widget(form.title) }}#}
+                    {#{{ form_widget(form.url) }}#}
+                    {#{{ form_widget(form.online) }}#}
             {{ form_widget(edit_form) }}
 
                     {{ tabs_widget(tabPane) }}

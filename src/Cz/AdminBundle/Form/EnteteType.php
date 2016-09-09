@@ -8,7 +8,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EnteteType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('translations', 'a2lix_translations',
+                array(
+                    "label"=> false
+                ));
 
+        ;
+    }
     /**
      * @param OptionsResolver $resolver
      */

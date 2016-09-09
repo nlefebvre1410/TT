@@ -3,17 +3,17 @@
 namespace Cz\PagePartBundle\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Cz\PagePartBundle\PagePartConfigurationReader\PagePartConfigurationReaderInterface;
-use Cz\PagePartBundle\PageTemplate\PageTemplateConfigurationReaderInterface;
-use Cz\PagePartBundle\PageTemplate\PageTemplateConfigurationService;
-use Cz\NodeBundle\Event\AdaptFormEvent;
-use Cz\AdminBundle\Helper\FormWidgets\Tabs\Tab;
-use Cz\AdminBundle\Helper\FormWidgets\ListWidget;
-use Cz\PagePartBundle\PagePartAdmin\PagePartAdminFactory;
-use Cz\PagePartBundle\Helper\HasPagePartsInterface;
-use Cz\PagePartBundle\Helper\HasPageTemplateInterface;
-use Cz\PagePartBundle\Helper\FormWidgets\PageTemplateWidget;
-use Cz\PagePartBundle\Helper\FormWidgets\PagePartWidget;
+use Cz\PagesPartBundle\PagePartConfigurationReader\PagePartConfigurationReaderInterface;
+use Cz\PagesPartBundle\PageTemplate\PageTemplateConfigurationReaderInterface;
+use Cz\PagesPartBundle\PageTemplate\PageTemplateConfigurationService;
+use Cz\ManagerBundle\Event\AdaptFormEvent;
+use Cz\ManagerBundle\Helper\FormWidgets\Tabs\Tab;
+use Cz\ManagerBundle\Helper\FormWidgets\ListWidget;
+use Cz\PagesPartBundle\PagePartAdmin\PagePartAdminFactory;
+use Cz\PagesPartBundle\Helper\HasPagePartsInterface;
+use Cz\PagesPartBundle\Helper\HasPageTemplateInterface;
+use Cz\PagesPartBundle\Helper\FormWidgets\PageTemplateWidget;
+use Cz\PagesPartBundle\Helper\FormWidgets\PagePartWidget;
 
 /**
  * NodeListener

@@ -19,7 +19,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity(repositoryClass="Acme\ContentBundle\Repository\ContentRepository")
  *
  */
-class Content
+class Content implements HasPageTemplateInterface
 {
     /**
      * @var int
@@ -359,4 +359,8 @@ class Content
     }
 
 
+    public function getPagePartAdminConfigurations()
+    {
+        return array('CzTestLangBundle:main');
+    }
 }

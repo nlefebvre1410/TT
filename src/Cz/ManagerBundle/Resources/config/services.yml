@@ -40,3 +40,14 @@ services:
         class: Cz\ManagerBundle\Twig\TabsTwigExtension
         tags:
             - { name: twig.extension }
+
+#     cz_manager.event.adapt_form_event:
+#    	class: Cz\ManagerBundle\Event\AdaptFormEvent
+#    	arguments: ['@request', '@?', '@?']
+#    	calls:
+#    		- [setDispatcher, ['@event_dispatcher']]
+     cz_manager_seo.listener:
+            class: Cz\ManagerBundle\EventListener\SeoListener
+            arguments: ['@doctrine.orm.entity_manager']
+            tags:
+                - { name: kernel.event_listener, event: cz_manager.adaptForm, method: adaptForm }

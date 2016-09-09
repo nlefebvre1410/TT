@@ -15,6 +15,12 @@ class EnteteTranslation implements OneLocaleInterface
 {
 
     use \A2lix\I18nDoctrineBundle\Doctrine\ORM\Util\Translation;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sur_title", type="string", length=255)
+     */
+    private $surTitle;
 
     /**
      * @var string
@@ -28,33 +34,25 @@ class EnteteTranslation implements OneLocaleInterface
      *
      * @ORM\Column(name="description", type="text")
      */
-    private $description;
+    private $introduction;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="lang", type="string", length=255)
+     * @return string
      */
-    private $lang;
-
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     *
-     * @return Entete
-     */
-    public function setTitle($title)
+    public function getSurTitle()
     {
-        $this->title = $title;
-
-        return $this;
+        return $this->surTitle;
     }
 
     /**
-     * Get title
-     *
+     * @param string $surTitle
+     */
+    public function setSurTitle($surTitle)
+    {
+        $this->surTitle = $surTitle;
+    }
+
+    /**
      * @return string
      */
     public function getTitle()
@@ -63,51 +61,29 @@ class EnteteTranslation implements OneLocaleInterface
     }
 
     /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Entete
+     * @param string $title
      */
-    public function setDescription($description)
+    public function setTitle($title)
     {
-        $this->description = $description;
-
-        return $this;
+        $this->title = $title;
     }
 
     /**
-     * Get description
-     *
      * @return string
      */
-    public function getDescription()
+    public function getIntroduction()
     {
-        return $this->description;
+        return $this->introduction;
     }
 
     /**
-     * Set lang
-     *
-     * @param string $lang
-     *
-     * @return Entete
+     * @param string $introduction
      */
-    public function setLang($lang)
+    public function setIntroduction($introduction)
     {
-        $this->lang = $lang;
-
-        return $this;
+        $this->introduction = $introduction;
     }
 
-    /**
-     * Get lang
-     *
-     * @return string
-     */
-    public function getLang()
-    {
-        return $this->lang;
-    }
+
 }
 

@@ -16,4 +16,13 @@ final class CzEvents
      */
     const ADD_URL = 'cz.url';
 
+
+    /**
+     * The adaptForm event occurs when building the form for the node.
+     *
+     * @var string
+     */
+    const ADAPT_FORM = 'cz_manager.adaptForm';
+
+
 }
